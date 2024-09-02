@@ -1,6 +1,24 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// Authorization
+builder.Services.AddAuthorization();
+
+// Configure identity database access vie EF Core.
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options => options.UseInMemoryDatabase("AppDb"));
+
+// Activate identity APIs. By default, both cookeis and proprietary tokens
+// are activated. Cookies will be issued base on the 'useCookies' querystring
+// parameter in the login endpoint.
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -10,6 +28,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "v1");
+    });
 }
 
 app.UseHttpsRedirection();
@@ -31,10 +53,18 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 })
-.WithName("GetWeatherForecast");
+.WithName("GetWeatherForecast")
+.RequireAuthorization();
+
+app.MapIdentityApi<IdentityUser>();
 
 app.Run();
 
+public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base (options)
+    { }
+}
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);

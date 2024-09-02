@@ -12,7 +12,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-dotnettools.csdevkit"
+				"ms-dotnettools.csdevkit",
+				"42Crunch.vscode-openapi"
 			]
 		}
 	},

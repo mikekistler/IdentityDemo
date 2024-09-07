@@ -52,7 +52,9 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast")
-.WithOpenApi()
+.WithDescription("Retrieve the five day weather forecast.")
+.WithSummary("Get five-day forecast.")
+.WithTags("Weather")
 .RequireAuthorization();
 
 app.MapIdentityApi<IdentityUser>();

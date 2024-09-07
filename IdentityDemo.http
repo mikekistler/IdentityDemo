@@ -1,0 +1,40 @@
+@HostAddress = http://localhost:5037
+
+# Send an unauthenticated request to the root of the API
+GET {{HostAddress}}/
+Accept: application/json
+
+###
+
+# Register a user
+POST {{HostAddress}}/register
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "nickchapsas",
+  "password": "Password1!",
+  "email": "nick@chapsas.com"
+}
+
+###
+
+# @name login
+POST {{HostAddress}}/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "nick@chapsas.com",
+  "password": "Password1!"
+}
+
+###
+
+# Authorized request
+
+GET {{HostAddress}}/
+Accept: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+

@@ -1,6 +1,38 @@
-@IdentityDemo_HostAddress = http://localhost:5051
+@HostAddress = http://localhost:5051
 
-GET {{IdentityDemo_HostAddress}}/weatherforecast/
+# Send an unauthenticated request to the root of the API
+GET {{HostAddress}}/weatherforecast
 Accept: application/json
 
 ###
+
+# Register a user
+POST {{HostAddress}}/register
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "mike@kistler.com",
+  "password": "Password1!"
+}
+
+###
+
+# @name login
+POST {{HostAddress}}/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "mike@kistler.com",
+  "password": "Password1!"
+}
+
+###
+
+# Authorized request
+
+GET {{HostAddress}}/weatherforecast
+Accept: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+

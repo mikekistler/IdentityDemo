@@ -1,9 +1,11 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
-	"name": "C# (.NET)",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/dotnet/sdk:9.0-preview",
+	"name": "C# (.NET) Nightly",
+    "build": {
+        "dockerfile": "./Dockerfile",
+        "context": "."
+    },
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
@@ -12,6 +14,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"ms-dotnettools.vscode-dotnet-runtime",
 				"ms-dotnettools.csdevkit",
 				"42Crunch.vscode-openapi",
 				"humao.rest-client"

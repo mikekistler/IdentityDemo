@@ -22,4 +22,13 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="6.7.3" />
   </ItemGroup>
 
+  <Target Name="AddOpenApiDependencies" AfterTargets="ResolveReferences">
+    <ItemGroup>
+      <AdditionalFiles
+        Include="@(ReferencePath->'%(RootDir)%(Directory)%(Filename).xml')"
+        Condition="$([System.String]::new(%(MyItem.MyMetadata)).Contains('Microsoft.AspNetCore.Identity.Data'))"
+        KeepMetadata="Identity" />
+    </ItemGroup>
+  </Target>
+
 </Project>

@@ -166,14 +166,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResultsOfContentHttpResultAndUnauthorizedHttpResult"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -591,15 +584,6 @@
           },
           "newPassword": {
             "type": "string"
-          }
-        }
-      },
-      "ResultsOfContentHttpResultAndUnauthorizedHttpResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "type": "object",
-            "nullable": true
           }
         }
       },

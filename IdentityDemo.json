@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.1.1",
   "info": {
     "title": "IdentityDemo | v1",
     "version": "1.0.0"
@@ -17,7 +17,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ArrayOfWeatherForecast"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
                 }
               }
             }
@@ -49,7 +52,7 @@
             "content": {
               "application/problem+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                  "$ref": "HttpValidationProblemDetails"
                 }
               }
             }
@@ -67,16 +70,14 @@
             "name": "useCookies",
             "in": "query",
             "schema": {
-              "type": "boolean",
-              "nullable": true
+              "type": "boolean"
             }
           },
           {
             "name": "useSessionCookies",
             "in": "query",
             "schema": {
-              "type": "boolean",
-              "nullable": true
+              "type": "boolean"
             }
           }
         ],
@@ -217,7 +218,7 @@
             "content": {
               "application/problem+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                  "$ref": "HttpValidationProblemDetails"
                 }
               }
             }
@@ -249,7 +250,7 @@
             "content": {
               "application/problem+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                  "$ref": "HttpValidationProblemDetails"
                 }
               }
             }
@@ -288,7 +289,7 @@
             "content": {
               "application/problem+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                  "$ref": "HttpValidationProblemDetails"
                 }
               }
             }
@@ -320,7 +321,7 @@
             "content": {
               "application/problem+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                  "$ref": "HttpValidationProblemDetails"
                 }
               }
             }
@@ -360,7 +361,7 @@
             "content": {
               "application/problem+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                  "$ref": "HttpValidationProblemDetails"
                 }
               }
             }
@@ -383,55 +384,23 @@
         "type": "object",
         "properties": {
           "tokenType": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "accessToken": {
             "type": "string"
           },
           "expiresIn": {
-            "type": "integer",
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
             "format": "int64"
           },
           "refreshToken": {
-            "type": "string"
-          }
-        }
-      },
-      "ArrayOfWeatherForecast": {
-        "type": "array",
-        "items": {
-          "required": [
-            "date",
-            "temperatureC",
-            "summary"
-          ],
-          "type": "object",
-          "properties": {
-            "date": {
-              "type": "string",
-              "format": "date"
-            },
-            "temperatureC": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "summary": {
-              "type": "string",
-              "nullable": true
-            },
-            "temperatureF": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        }
-      },
-      "DictionaryOfstringAndArrayOfstring": {
-        "type": "object",
-        "additionalProperties": {
-          "type": "array",
-          "items": {
             "type": "string"
           }
         }
@@ -451,28 +420,46 @@
         "type": "object",
         "properties": {
           "type": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "status": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
           },
           "detail": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "instance": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "errors": {
-            "$ref": "#/components/schemas/DictionaryOfstringAndArrayOfstring"
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -480,16 +467,22 @@
         "type": "object",
         "properties": {
           "newEmail": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "newPassword": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "oldPassword": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -522,12 +515,16 @@
             "type": "string"
           },
           "twoFactorCode": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "twoFactorRecoveryCode": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -591,12 +588,16 @@
         "type": "object",
         "properties": {
           "enable": {
-            "type": "boolean",
-            "nullable": true
+            "type": [
+              "null",
+              "boolean"
+            ]
           },
           "twoFactorCode": {
-            "type": "string",
-            "nullable": true
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "resetSharedKey": {
             "type": "boolean"
@@ -622,21 +623,63 @@
             "type": "string"
           },
           "recoveryCodesLeft": {
-            "type": "integer",
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
             "format": "int32"
           },
           "recoveryCodes": {
-            "type": "array",
+            "type": [
+              "null",
+              "array"
+            ],
             "items": {
               "type": "string"
-            },
-            "nullable": true
+            }
           },
           "isTwoFactorEnabled": {
             "type": "boolean"
           },
           "isMachineRemembered": {
             "type": "boolean"
+          }
+        }
+      },
+      "WeatherForecast": {
+        "required": [
+          "date",
+          "temperatureC",
+          "summary"
+        ],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "summary": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "temperatureF": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
           }
         }
       }
